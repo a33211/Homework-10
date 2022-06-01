@@ -11,6 +11,7 @@ class Phone(Field):
         self.param = param
     def __repr__(self):
         return f'{self.param}'
+
 class Record:
     def __init__(self, name, phone=None):
         self.name = name
@@ -25,20 +26,18 @@ class Record:
         for p in self.phones:
             if p.param == phone.param:
                 self.phones.remove(p)
-    def changePhone(self, name:Name, phone:Phone, new_phone:Phone):
-           if self.name == name.param:
-               for p in self.phones:
-                   if p.param == phone:
-                       self.phones.p = new_phone
+    def changePhone(self, phone:Phone, new_phone:Phone):
+        for p in self.phones:
+            if p.param == phone.param:
+                self.erasePhone(p)
+                self.addPhone(new_phone)
 
 
 class AddressBook(UserDict):
     def add_record(self, rec):
         self.data[rec.name.param] = rec
 
-
 phone_book = AddressBook()
-
 
 def add(*args):
     name = Name(args[0])
@@ -47,6 +46,7 @@ def add(*args):
     phone_book.add_record(rec)
     print(phone_book)
     return f'Contact {name.param} add successful'
+
 def erase_phone(*args):
     name = Name(args[0])
     phone = Phone(args[1])
@@ -56,6 +56,7 @@ def erase_phone(*args):
         rec.erasePhone(phone)
     print(phone_book)
     return f'Contact {phone.param} erase successful'
+
 def adds_phone(*args):
     key = args[0]
     phone = Phone(args[1])
@@ -64,6 +65,7 @@ def adds_phone(*args):
         value.addPhone(phone)
         print(phone_book)
     return phone_book
+
 def change_phone(*args):
     key = args[0]
     phone = Phone(args[1])
@@ -76,8 +78,7 @@ def change_phone(*args):
     return phone_book
 def exit(*args):
     return "Good bye!"
-COMMANDS = {#show_all:["show all"],
-    #hello:["hello"],
+COMMANDS = {
     add:["add"],
     adds_phone:['append phone'],
     erase_phone:["erase"],# in command enter command, user, phone number to erase
@@ -109,4 +110,3 @@ AddressBook реализует метод add_record, который добав�
 if __name__ == '__main__':
     main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
