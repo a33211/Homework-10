@@ -21,6 +21,15 @@ class Record:
         return f'{self.phones}'
     def addPhone(self, phone:Phone):
         self.phones.append(phone)
+    def erasePhone(self, phone:Phone):
+        for p in self.phones:
+            if p.param == phone.param:
+                self.phones.remove(p)
+    def changePhone(self, name:Name, phone:Phone, new_phone:Phone):
+           if self.name == name.param:
+               for p in self.phones:
+                   if p.param == phone:
+                       self.phones.p = new_phone
 
 
 class AddressBook(UserDict):
@@ -38,6 +47,15 @@ def add(*args):
     phone_book.add_record(rec)
     print(phone_book)
     return f'Contact {name.param} add successful'
+def erase_phone(*args):
+    name = Name(args[0])
+    phone = Phone(args[1])
+    print(f'!!!!!{args[1]}     {name} ')
+    rec = phone_book[name.param]
+    if rec:
+        rec.erasePhone(phone)
+    print(phone_book)
+    return f'Contact {phone.param} erase successful'
 def adds_phone(*args):
     key = args[0]
     phone = Phone(args[1])
@@ -46,24 +64,25 @@ def adds_phone(*args):
         value.addPhone(phone)
         print(phone_book)
     return phone_book
-def erase_phone(*args):
+def change_phone(*args):
     key = args[0]
     phone = Phone(args[1])
     value = phone_book.get(key)
-    if value:
-        value = value.remove(phone)
+    new_phone = Phone(args[2])
+    if new_phone:
+          value.changePhone(phone, new_phone)
+          print(f'Contact {value} changed successful')
     print(phone_book)
     return phone_book
-def change_phone(*args):
-    pass
-
+def exit(*args):
+    return "Good bye!"
 COMMANDS = {#show_all:["show all"],
     #hello:["hello"],
     add:["add"],
     adds_phone:['append phone'],
     erase_phone:["erase"],# in command enter command, user, phone number to erase
-    #show_all:["show all"],
-    # exit:["good bye", "close", "exit"]
+    change_phone:["change phone"],
+    exit:["good bye", "close", "exit"]
 }
 
 def parse_command(user_input:str):
